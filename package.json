@@ -1,0 +1,9 @@
+{
+  "name": "flyer-eclair",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site vitrine Flyer Éclair — paiement Stripe et assistant IA via Netlify Functions",
+  "dependencies": {
+    "stripe": "^17.4.0"
+  }
+}
