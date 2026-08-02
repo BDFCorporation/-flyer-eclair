@@ -1106,7 +1106,9 @@
     <p>Décrivez votre projet ci-dessous. Nous vous recontactons pour le règlement et la livraison sous 24h.</p>
     <div class="guarantee"><i data-lucide="shield-check" style="width:15px;height:15px;"></i>Retouche incluse · Fichiers HD · Aucun engagement</div>
 
-    <form class="order-form" id="orderForm">
+    <form class="order-form" id="orderForm" name="commande-flyer" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="commande-flyer">
+      <p style="position:absolute; left:-9999px;" aria-hidden="true"><label>Ne pas remplir : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="of-grid">
         <div class="of-field">
           <label for="of-name">Nom</label>
@@ -1173,7 +1175,7 @@
         </div>
       </div>
       <div class="of-submit-row">
-        <span class="of-note">En envoyant ce brief, votre logiciel de messagerie s'ouvre avec toutes les infos déjà remplies.</span>
+        <span class="of-note">En envoyant ce brief, on reçoit directement votre demande — pas besoin d'ouvrir votre messagerie.</span>
         <button type="submit" class="btn btn-primary">Envoyer mon brief<i data-lucide="arrow-right" style="width:16px;height:16px;"></i></button>
       </div>
       <div class="of-status" id="ofStatus">Votre messagerie va s'ouvrir avec le brief pré-rempli. Il ne reste qu'à l'envoyer.</div>
@@ -1352,10 +1354,9 @@
 
   const orderForm = document.getElementById('orderForm');
   const ofStatus = document.getElementById('ofStatus');
-  orderForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(orderForm);
-    const get = (k) => (data.get(k) || '').toString().trim();
+  const ofSubmitBtn = orderForm.querySelector('button[type="submit"]');
+
+  function buildMailto(get){
     const lines = [
       'Nouvelle commande de flyer — Flyer Éclair',
       '',
@@ -1377,8 +1378,38 @@
     ];
     const subject = encodeURIComponent('Commande flyer — ' + get('name'));
     const body = encodeURIComponent(lines.join('\n'));
-    ofStatus.classList.add('show');
-    window.location.href = 'mailto:contact@bdfproduction.fr?subject=' + subject + '&body=' + body;
+    return 'mailto:contact@bdfproduction.fr?subject=' + subject + '&body=' + body;
+  }
+
+  orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(orderForm);
+    const get = (k) => (data.get(k) || '').toString().trim();
+
+    if (ofSubmitBtn) ofSubmitBtn.disabled = true;
+
+    try {
+      const encoded = new URLSearchParams();
+      for (const [key, value] of data.entries()) {
+        encoded.append(key, value);
+      }
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encoded.toString()
+      });
+      if (!res.ok) throw new Error('form submission failed');
+
+      ofStatus.textContent = 'Votre brief a bien été envoyé. On revient vers vous rapidement !';
+      ofStatus.classList.add('show');
+      orderForm.reset();
+    } catch (err) {
+      ofStatus.textContent = "L'envoi automatique a échoué — votre messagerie va s'ouvrir avec le brief pré-rempli, il ne reste qu'à l'envoyer.";
+      ofStatus.classList.add('show');
+      window.location.href = buildMailto(get);
+    } finally {
+      if (ofSubmitBtn) ofSubmitBtn.disabled = false;
+    }
   });
 
   /* ---- Paiement Stripe ---- */
