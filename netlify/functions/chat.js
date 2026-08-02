@@ -29,7 +29,7 @@ exports.handler = async (event) => {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-sonnet-5',
         max_tokens: 300,
         system: SYSTEM_PROMPT,
         messages,
@@ -37,8 +37,12 @@ exports.handler = async (event) => {
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      console.error('Anthropic API error', response.status, JSON.stringify(data));
+    }
     return { statusCode: response.status, body: JSON.stringify(data) };
   } catch (err) {
+    console.error('Chat function error', err.message);
     return { statusCode: 502, body: JSON.stringify({ error: 'Assistant indisponible' }) };
   }
 };
