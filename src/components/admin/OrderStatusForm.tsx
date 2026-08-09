@@ -19,15 +19,27 @@ export function OrderStatusForm({ orderId, status }: { orderId: string; status: 
   const [isSaving, setIsSaving] = useState(false);
 
   async function handleChange(newStatus: string) {
+    const previous = value;
     setValue(newStatus);
     setIsSaving(true);
-    await fetch(`/api/admin/orders/${orderId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    setIsSaving(false);
-    router.refresh();
+    try {
+      const res = await fetch(`/api/admin/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (!res.ok) {
+        setValue(previous);
+        window.alert("Impossible de mettre à jour le statut.");
+        return;
+      }
+      router.refresh();
+    } catch {
+      setValue(previous);
+      window.alert("Impossible de mettre à jour le statut.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   return (

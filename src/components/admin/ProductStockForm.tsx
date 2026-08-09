@@ -17,13 +17,26 @@ export function ProductStockForm({
 
   async function handleSave() {
     setIsSaving(true);
-    await fetch(`/api/admin/products/${product.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ stock, isActive }),
-    });
-    setIsSaving(false);
-    router.refresh();
+    try {
+      const res = await fetch(`/api/admin/products/${product.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stock, isActive }),
+      });
+      if (!res.ok) {
+        setStock(product.stock);
+        setIsActive(product.isActive);
+        window.alert("Impossible d'enregistrer le produit.");
+        return;
+      }
+      router.refresh();
+    } catch {
+      setStock(product.stock);
+      setIsActive(product.isActive);
+      window.alert("Impossible d'enregistrer le produit.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   return (

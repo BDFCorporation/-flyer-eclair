@@ -1,13 +1,22 @@
+import { OrderStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { formatPriceCents } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
+// Une commande payée reste "payée" même une fois expédiée/livrée : on l'inclut dans les
+// statistiques tant qu'elle a été honorée (donc tous les statuts après PAID, en excluant
+// les commandes jamais payées ou annulées/remboursées).
+const FULFILLED_STATUSES: OrderStatus[] = ["PAID", "PROCESSING", "SHIPPED", "DELIVERED"];
+
 export default async function AdminDashboardPage() {
   const [orderCount, revenue, lowStock] = await Promise.all([
-    prisma.order.count({ where: { status: "PAID" } }),
-    prisma.order.aggregate({ where: { status: "PAID" }, _sum: { totalCents: true } }),
-    prisma.product.findMany({ where: { stock: { lt: 10 } } }),
+    prisma.order.count({ where: { status: { in: FULFILLED_STATUSES } } }),
+    prisma.order.aggregate({
+      where: { status: { in: FULFILLED_STATUSES } },
+      _sum: { totalCents: true },
+    }),
+    prisma.product.findMany({ where: { stock: { lt: 10 }, isActive: true } }),
   ]);
 
   return (

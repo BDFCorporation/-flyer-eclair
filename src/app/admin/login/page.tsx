@@ -16,21 +16,26 @@ export default function AdminLoginPage() {
     setIsSubmitting(true);
     setError(null);
 
-    const res = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const data = await res.json();
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
 
-    if (!res.ok) {
-      setError(data.error ?? "Identifiants incorrects.");
+      if (!res.ok) {
+        setError(data.error ?? "Identifiants incorrects.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      router.push("/admin");
+      router.refresh();
+    } catch {
+      setError("Connexion impossible. Vérifiez votre réseau et réessayez.");
       setIsSubmitting(false);
-      return;
     }
-
-    router.push("/admin");
-    router.refresh();
   }
 
   return (

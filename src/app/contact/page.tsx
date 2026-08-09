@@ -16,12 +16,16 @@ export default function ContactPage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setStatus("sending");
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    setStatus(res.ok ? "sent" : "error");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
   }
 
   if (status === "sent") {
