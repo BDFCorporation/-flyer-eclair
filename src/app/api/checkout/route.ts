@@ -74,56 +74,91 @@ export async function POST(req: NextRequest) {
     orderNumber = generateOrderNumber();
   }
 
-  const order = await prisma.order.create({
-    data: {
-      orderNumber,
-      email,
-      customerId: session?.customerId,
-      subtotalCents,
-      shippingCents: SHIPPING_CENTS,
-      totalCents,
-      shippingAddressId: address.id,
-      billingAddressId: address.id,
-      items: {
-        create: cart.items.map((item) => ({
-          productId: item.productId,
-          productName: item.product.name,
-          unitPriceCents: item.unitPriceCents,
+  // Le stock est réservé de façon atomique dès la création de la commande (et non au webhook) :
+  // sans ça, deux clients passant commande en même temps sur la dernière unité passaient tous
+  // les deux le contrôle de stock ci-dessus, étaient tous les deux débités, et un seul pouvait
+  // être honoré (l'autre restait bloqué en PENDING). La réservation est libérée si la création
+  // de la session Stripe échoue ensuite.
+  let order;
+  try {
+    order = await prisma.$transaction(async (tx) => {
+      for (const item of cart.items) {
+        const updated = await tx.product.updateMany({
+          where: { id: item.productId, stock: { gte: item.quantity } },
+          data: { stock: { decrement: item.quantity } },
+        });
+        if (updated.count !== 1) throw new Error("STOCK_INSUFFISANT");
+      }
+      return tx.order.create({
+        data: {
+          orderNumber,
+          email,
+          customerId: session?.customerId,
+          subtotalCents,
+          shippingCents: SHIPPING_CENTS,
+          totalCents,
+          shippingAddressId: address.id,
+          billingAddressId: address.id,
+          items: {
+            create: cart.items.map((item) => ({
+              productId: item.productId,
+              productName: item.product.name,
+              unitPriceCents: item.unitPriceCents,
+              quantity: item.quantity,
+              totalCents: item.unitPriceCents * item.quantity,
+            })),
+          },
+        },
+      });
+    });
+  } catch {
+    return NextResponse.json({ error: "Un produit est indisponible ou le stock a changé" }, { status: 409 });
+  }
+
+  try {
+    const checkoutSession = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      customer_email: email,
+      line_items: [
+        ...cart.items.map((item) => ({
           quantity: item.quantity,
-          totalCents: item.unitPriceCents * item.quantity,
+          price_data: {
+            currency: "eur",
+            unit_amount: item.unitPriceCents,
+            product_data: { name: item.product.name },
+          },
         })),
-      },
-    },
-  });
-
-  const checkoutSession = await stripe.checkout.sessions.create({
-    mode: "payment",
-    payment_method_types: ["card"],
-    customer_email: email,
-    line_items: [
-      ...cart.items.map((item) => ({
-        quantity: item.quantity,
-        price_data: {
-          currency: "eur",
-          unit_amount: item.unitPriceCents,
-          product_data: { name: item.product.name },
+        {
+          quantity: 1,
+          price_data: {
+            currency: "eur",
+            unit_amount: SHIPPING_CENTS,
+            product_data: { name: "Livraison" },
+          },
         },
-      })),
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: SHIPPING_CENTS,
-          product_data: { name: "Livraison" },
-        },
-      },
-    ],
-    metadata: { orderId: order.id, orderNumber: order.orderNumber },
-    success_url: `${SITE_URL}/commande/confirmation/${order.orderNumber}`,
-    cancel_url: `${SITE_URL}/panier`,
-  });
+      ],
+      metadata: { orderId: order.id, orderNumber: order.orderNumber },
+      success_url: `${SITE_URL}/commande/confirmation/${order.orderNumber}`,
+      cancel_url: `${SITE_URL}/panier`,
+    });
 
-  // Le panier est conservé jusqu’à confirmation Stripe : un paiement annulé ne doit pas le vider.
+    // Le panier est conservé jusqu’à confirmation Stripe : un paiement annulé ne doit pas le vider.
 
-  return NextResponse.json({ url: checkoutSession.url });
+    return NextResponse.json({ url: checkoutSession.url });
+  } catch (err) {
+    // La session Stripe n'a pas pu être créée : on libère le stock réservé et on annule la commande
+    // pour ne pas garder une réservation fantôme.
+    console.error(`[checkout] échec de création de la session Stripe pour ${order.orderNumber}`, err);
+    await prisma.$transaction(async (tx) => {
+      for (const item of cart.items) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: { stock: { increment: item.quantity } },
+        });
+      }
+      await tx.order.update({ where: { id: order.id }, data: { status: "CANCELLED" } });
+    });
+    return NextResponse.json({ error: "Erreur lors de la création du paiement" }, { status: 500 });
+  }
 }

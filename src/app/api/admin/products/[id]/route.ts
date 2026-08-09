@@ -17,10 +17,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     isActive?: boolean;
   };
 
+  if (stock !== undefined && (!Number.isInteger(stock) || stock < 0)) {
+    return NextResponse.json({ error: "Stock invalide" }, { status: 400 });
+  }
+
   const product = await prisma.product.update({
     where: { id: params.id },
     data: {
-      ...(typeof stock === "number" ? { stock } : {}),
+      ...(stock !== undefined ? { stock } : {}),
       ...(typeof isActive === "boolean" ? { isActive } : {}),
     },
   });

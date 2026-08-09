@@ -28,43 +28,27 @@ export async function POST(req: NextRequest) {
     const orderId = session.metadata?.orderId;
 
     if (orderId) {
-      const existingOrder = await prisma.order.findUnique({
-        where: { id: orderId },
-        include: { items: true },
-      });
-      if (!existingOrder || existingOrder.status === "PAID") {
+      const existingOrder = await prisma.order.findUnique({ where: { id: orderId } });
+      if (!existingOrder || existingOrder.status !== "PENDING") {
+        // Déjà payée (idempotence) ou annulée (stock déjà libéré, cf. /api/checkout) : rien à faire.
         return NextResponse.json({ received: true });
       }
 
+      // Le stock est réservé de façon atomique à la création de la commande
+      // (voir /api/checkout) : ce webhook se contente de confirmer le paiement.
       let order;
       try {
-        order = await prisma.$transaction(async (tx) => {
-          for (const item of existingOrder.items) {
-            const updated = await tx.product.updateMany({
-              where: { id: item.productId, stock: { gte: item.quantity } },
-              data: { stock: { decrement: item.quantity } },
-            });
-            if (updated.count !== 1) throw new Error("Stock insuffisant après paiement");
-          }
-          return tx.order.update({
-            where: { id: orderId },
-            data: {
-              status: "PAID",
-              stripePaymentIntentId:
-                typeof session.payment_intent === "string" ? session.payment_intent : undefined,
-            },
-            include: { items: true },
-          });
+        order = await prisma.order.update({
+          where: { id: orderId },
+          data: {
+            status: "PAID",
+            stripePaymentIntentId:
+              typeof session.payment_intent === "string" ? session.payment_intent : undefined,
+          },
+          include: { items: true },
         });
       } catch (err) {
-        // Le client a été débité mais le stock ne permet plus d'honorer la commande :
-        // on ne relance pas la commande en boucle côté Stripe (200 pour éviter les retries),
-        // on marque la commande pour reprise manuelle par un humain.
         console.error(`[stripe-webhook] échec de la finalisation de la commande ${orderId}`, err);
-        await prisma.order.update({
-          where: { id: orderId },
-          data: { status: "CANCELLED" },
-        });
         return NextResponse.json({ received: true });
       }
 
