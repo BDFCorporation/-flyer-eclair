@@ -1,3 +1,14 @@
 [build]
-  functions = "netlify/functions"
-  publish = "."
+  # Le projet n'a pas encore d'historique de migrations Prisma (prisma/migrations/) :
+  # `db push` synchronise le schéma directement, idempotent, pratique pour amorcer
+  # une base neuve. À remplacer par `prisma migrate deploy` une fois de vraies
+  # migrations versionnées créées (`npx prisma migrate dev` en local).
+  # Netlify met node_modules en cache entre builds, donc le postinstall qui génère
+  # normalement le client Prisma ne se relance pas : on force `prisma generate`
+  # explicitement (db push le referait implicitement, mais on le rend explicite
+  # et on ne saute plus cette étape avec --skip-generate).
+  command = "npx prisma generate && npx prisma db push && npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

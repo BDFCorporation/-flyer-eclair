@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0e1012">
+<title>Page introuvable — BDF Production</title>
+<meta name="description" content="La page demandée n'existe pas sur le site BDF Production.">
+<meta property="og:title" content="Page introuvable — BDF Production">
+<meta property="og:description" content="La page demandée n'existe pas sur le site BDF Production.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230e1012'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23f2a93b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1012;
+  --bg-panel:#15181b;
+  --bg-panel-2:#1b1f23;
+  --line:#2a2f34;
+  --text:#eef0f1;
+  --text-dim:#9aa1a7;
+  --amber:#f2a93b;
+  --amber-dim:#8a672a;
+  --cyan:#49d3e6;
+  --red:#ff4d4d;
+  --radius:2px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--amber);color:#0e1012;}
+a{color:inherit;text-decoration:none;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.display{font-family:'Big Shoulders Display',sans-serif;text-transform:uppercase;letter-spacing:0.01em;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
+
+/* ---------- sprocket divider ---------- */
+.sprocket{
+  display:flex;
+  justify-content:space-between;
+  padding:0 6vw;
+  height:14px;
+  background:var(--bg-panel);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.sprocket span{
+  width:7px;height:7px;margin-top:3.5px;
+  background:var(--bg);
+  border-radius:1px;
+}
+
+/* ---------- nav ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 6vw;
+  background:linear-gradient(to bottom, rgba(14,16,18,0.94), rgba(14,16,18,0.85) 70%, rgba(14,16,18,0));
+  backdrop-filter:blur(2px);
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:900;font-size:22px;letter-spacing:0.02em;
+}
+.logo .dot{
+  width:9px;height:9px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 8px var(--red);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.25;}}
+nav{display:flex;gap:34px;align-items:center;}
+nav a{
+  font-size:13px;color:var(--text-dim);
+  text-transform:uppercase;letter-spacing:0.08em;
+  transition:color 0.2s;
+}
+nav a:hover{color:var(--amber);}
+nav a.active{color:var(--amber);}
+nav a.cta{
+  color:var(--bg);background:var(--amber);
+  padding:9px 16px;border-radius:var(--radius);
+  font-weight:600;
+}
+nav a.cta:hover{color:var(--bg);}
+.navlinks{display:flex;gap:30px;}
+.nav-toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:8px;flex-direction:column;justify-content:center;gap:5px;z-index:210;
+}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);transition:transform .2s ease, opacity .2s ease;}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:900px){
+  .nav-toggle{display:flex;}
+  .navlinks{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+    position:fixed;top:0;left:0;right:0;height:100vh;background:rgba(14,16,18,0.98);
+    opacity:0;pointer-events:none;transform:translateY(-10px);
+    transition:opacity .22s ease, transform .22s ease;
+    z-index:190;
+  }
+  .navlinks.open{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .navlinks a{font-size:20px;}
+  .navlinks a.cta{margin-top:10px;}
+}
+
+/* ---------- page header (non-hero pages) ---------- */
+.page-head{
+  padding:170px 6vw 70px;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(73,211,230,0.09), transparent 45%),
+    radial-gradient(ellipse at 10% 90%, rgba(242,169,59,0.09), transparent 50%),
+    var(--bg);
+}
+.page-head .rec-bar{
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:0.12em;color:var(--text-dim);
+  margin-bottom:22px;
+}
+.page-head .rec-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--red);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+.page-head h1{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:900;
+  font-size:clamp(38px, 7vw, 84px);
+  line-height:0.96;
+  max-width:18ch;
+}
+.page-head h1 .accent{color:var(--amber);}
+.page-head p.lede{
+  margin-top:20px;max-width:620px;
+  font-size:clamp(15px,1.6vw,18px);
+  color:var(--text-dim);line-height:1.55;
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 6vw 80px;
+  background:
+    radial-gradient(ellipse at 78% 18%, rgba(73,211,230,0.10), transparent 45%),
+    radial-gradient(ellipse at 15% 85%, rgba(242,169,59,0.10), transparent 50%),
+    var(--bg);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.rec-bar{
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:0.12em;color:var(--text-dim);
+  margin-bottom:28px;
+}
+.rec-bar .rec-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--red);
+  animation:pulse 1.2s ease-in-out infinite;
+}
+#timecode{color:var(--cyan);}
+.hero h1{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:900;
+  font-size:clamp(46px, 9vw, 128px);
+  line-height:0.92;
+  letter-spacing:0.005em;
+  max-width:15ch;
+}
+.hero h1 .accent{color:var(--amber);}
+.hero p.lede{
+  margin-top:26px;
+  max-width:640px;
+  font-size:clamp(16px,2vw,19px);
+  color:var(--text-dim);
+  line-height:1.55;
+}
+.hero-ctas{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;}
+.btn{
+  padding:15px 26px;border-radius:var(--radius);
+  font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:transform 0.18s ease, background 0.18s ease, border-color .18s ease;
+  border:1px solid transparent;
+  cursor:pointer;
+}
+.btn-primary{background:var(--amber);color:#0e1012;}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{border-color:var(--line);color:var(--text);background:transparent;}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+
+.wb-strip{
+  position:absolute;right:6vw;bottom:60px;
+  display:flex;gap:0;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--text-dim);letter-spacing:0.05em;
+}
+@media(max-width:820px){ .wb-strip{display:none;} }
+.wb-chip{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid var(--line);padding:8px 14px;
+}
+.wb-chip:first-child{border-right:none;}
+.wb-swatch{width:9px;height:9px;}
+
+/* ---------- section shell ---------- */
+section{padding:120px 6vw;position:relative;}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:0.12em;color:var(--amber);
+  text-transform:uppercase;margin-bottom:14px;display:block;
+}
+.section-head{max-width:760px;margin-bottom:64px;}
+.section-head h2{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:clamp(32px,4.4vw,56px);
+  line-height:1;text-transform:uppercase;
+}
+.section-head p{color:var(--text-dim);margin-top:18px;font-size:16px;line-height:1.6;max-width:60ch;}
+
+/* ---------- services : viewfinder cards ---------- */
+.services{background:var(--bg-panel);border-bottom:1px solid var(--line);}
+.service-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);
+}
+.service-card{
+  background:var(--bg-panel);
+  padding:36px 30px 32px;
+  position:relative;
+  min-height:230px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.service-card::before,.service-card::after{
+  content:"";position:absolute;width:14px;height:14px;
+  border-color:var(--line);opacity:0;transition:opacity .25s, border-color .25s;
+}
+.service-card::before{top:12px;left:12px;border-top:2px solid;border-left:2px solid;}
+.service-card::after{bottom:12px;right:12px;border-bottom:2px solid;border-right:2px solid;}
+.service-card:hover::before,.service-card:hover::after{opacity:1;border-color:var(--amber);}
+.service-card:hover{background:var(--bg-panel-2);}
+.svc-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:0.1em;}
+.svc-title{font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:26px;text-transform:uppercase;margin-top:14px;}
+.svc-desc{color:var(--text-dim);font-size:14.5px;line-height:1.55;margin-top:12px;}
+.svc-link{
+  margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--cyan);letter-spacing:0.05em;display:inline-flex;align-items:center;gap:6px;
+}
+.svc-link:hover{color:var(--amber);}
+
+/* ---------- who we help : split ---------- */
+.audience{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);padding:0;}
+@media(max-width:860px){.audience{grid-template-columns:1fr;}}
+.aud-col{background:var(--bg);padding:52px 42px;}
+.aud-col .tc{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:0.1em;}
+.aud-col h3{font-family:'Big Shoulders Display',sans-serif;font-size:34px;text-transform:uppercase;margin-top:12px;font-weight:800;}
+.aud-col p{color:var(--text-dim);margin-top:16px;line-height:1.6;font-size:15px;max-width:46ch;}
+.aud-col ul{margin-top:22px;display:flex;flex-direction:column;gap:10px;}
+.aud-col li{font-size:14px;color:var(--text);display:flex;gap:10px;align-items:flex-start;}
+.aud-col li::before{content:"—";color:var(--amber);flex-shrink:0;}
+
+/* ---------- process timeline ---------- */
+.process{border-bottom:1px solid var(--line);}
+.steps{display:flex;flex-direction:column;}
+.step{
+  display:grid;grid-template-columns:140px 1fr;
+  gap:30px;padding:30px 0;border-top:1px solid var(--line);
+  align-items:baseline;
+}
+.step:last-child{border-bottom:1px solid var(--line);}
+.step .tc-num{font-family:'JetBrains Mono',monospace;color:var(--amber);font-size:14px;}
+.step h4{font-family:'Big Shoulders Display',sans-serif;font-size:24px;text-transform:uppercase;font-weight:700;}
+.step p{color:var(--text-dim);margin-top:8px;font-size:14.5px;line-height:1.55;max-width:60ch;}
+@media(max-width:600px){.step{grid-template-columns:1fr;gap:8px;}}
+
+/* ---------- equipment ticker ---------- */
+.gear{background:var(--bg-panel);border-bottom:1px solid var(--line);overflow:hidden;padding:80px 0;}
+.gear .section-head{padding:0 6vw;}
+.ticker-track{display:flex;white-space:nowrap;animation:scroll 32s linear infinite;}
+.gear:hover .ticker-track{animation-play-state:paused;}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-item{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-size:clamp(28px,4vw,46px);
+  text-transform:uppercase;color:var(--bg);
+  -webkit-text-stroke:1px var(--text-dim);
+  padding:0 34px;font-weight:700;
+  display:flex;align-items:center;gap:34px;
+}
+.ticker-item span.sep{color:var(--amber);-webkit-text-stroke:0;font-size:20px;}
+
+/* ---------- CTA / contact banner (used on home + tarifs) ---------- */
+.contact-banner{
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(242,169,59,0.08), transparent 50%),
+    var(--bg);
+  text-align:left;
+  border-bottom:1px solid var(--line);
+}
+.contact-inner{
+  display:grid;grid-template-columns:1.3fr 1fr;gap:60px;
+}
+@media(max-width:860px){.contact-inner{grid-template-columns:1fr;}}
+.contact-banner h2{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:900;
+  font-size:clamp(34px,5.4vw,70px);text-transform:uppercase;line-height:0.98;
+}
+.contact-banner h2 .accent{color:var(--cyan);}
+.contact-banner p{color:var(--text-dim);margin-top:20px;font-size:16px;line-height:1.6;max-width:50ch;}
+.contact-ctas{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap;}
+.contact-card{
+  border:1px solid var(--line);padding:34px;background:var(--bg-panel);
+}
+.contact-card .row{
+  display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);
+  font-size:14px;gap:16px;
+}
+.contact-card .row:last-child{border-bottom:none;}
+.contact-card .row span:first-child{color:var(--text-dim);}
+.contact-card .row span:last-child{font-family:'JetBrains Mono',monospace;color:var(--cyan);text-align:right;}
+
+footer{
+  padding:34px 6vw;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--line);color:var(--text-dim);font-size:12px;
+  font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;flex-wrap:wrap;gap:12px;
+}
+footer nav.footer-links{display:flex;gap:22px;flex-wrap:wrap;}
+footer nav.footer-links a:hover{color:var(--amber);}
+
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+/* =========================================================
+   TARIFS PAGE
+   ========================================================= */
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);
+}
+.plan{
+  background:var(--bg-panel);padding:40px 32px;display:flex;flex-direction:column;
+  position:relative;
+}
+.plan.featured{background:var(--bg-panel-2);}
+.plan.featured::before{
+  content:"RECOMMANDÉ";position:absolute;top:0;right:0;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;
+  background:var(--amber);color:var(--bg);padding:6px 12px;font-weight:700;
+}
+.plan-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:0.1em;}
+.plan-name{font-family:'Big Shoulders Display',sans-serif;font-size:30px;text-transform:uppercase;font-weight:800;margin-top:10px;}
+.plan-price{font-family:'Big Shoulders Display',sans-serif;font-size:44px;font-weight:900;margin-top:18px;color:var(--amber);}
+.plan-price span{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-dim);font-weight:400;margin-left:6px;}
+.plan-desc{color:var(--text-dim);font-size:14px;margin-top:12px;line-height:1.55;}
+.plan-list{margin-top:26px;display:flex;flex-direction:column;gap:12px;flex-grow:1;}
+.plan-list li{font-size:14px;display:flex;gap:10px;align-items:flex-start;}
+.plan-list li::before{content:"—";color:var(--amber);flex-shrink:0;}
+.plan .btn{margin-top:30px;justify-content:center;}
+
+.price-table{width:100%;border-collapse:collapse;margin-top:10px;}
+.price-table th{
+  text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:0.08em;color:var(--text-dim);text-transform:uppercase;
+  padding:14px 16px;border-bottom:1px solid var(--line);
+}
+.price-table td{
+  padding:18px 16px;border-bottom:1px solid var(--line);font-size:14.5px;
+}
+.price-table tr:hover td{background:var(--bg-panel);}
+.price-table td.item{font-weight:600;}
+.price-table td.price{font-family:'JetBrains Mono',monospace;color:var(--amber);text-align:right;white-space:nowrap;}
+.price-table td.note{color:var(--text-dim);font-size:13px;}
+
+.pricing-note{
+  margin-top:40px;padding:24px 28px;border:1px dashed var(--line);
+  color:var(--text-dim);font-size:14px;line-height:1.6;
+}
+.pricing-note strong{color:var(--text);}
+
+/* =========================================================
+   CONTACT PAGE
+   ========================================================= */
+.contact-page{display:grid;grid-template-columns:1.1fr 0.9fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+@media(max-width:900px){.contact-page{grid-template-columns:1fr;}}
+.contact-form-wrap{background:var(--bg);padding:52px 46px;}
+.contact-form-wrap h2{
+  font-family:'Big Shoulders Display',sans-serif;font-size:32px;text-transform:uppercase;font-weight:800;
+}
+.contact-form-wrap > p{color:var(--text-dim);margin-top:12px;font-size:14.5px;line-height:1.55;}
+.form-grid{margin-top:34px;display:flex;flex-direction:column;gap:22px;}
+.field{display:flex;flex-direction:column;gap:8px;}
+.field label{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;
+  color:var(--text-dim);text-transform:uppercase;
+}
+.field input,.field select,.field textarea{
+  background:var(--bg-panel);border:1px solid var(--line);color:var(--text);
+  padding:13px 14px;font-family:'Space Grotesk',sans-serif;font-size:14.5px;
+  border-radius:var(--radius);resize:vertical;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--cyan);
+}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:520px){.field-row{grid-template-columns:1fr;}}
+.chip-group{display:flex;gap:10px;flex-wrap:wrap;}
+.chip-group input{display:none;}
+.chip-group label{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  border:1px solid var(--line);padding:9px 14px;color:var(--text-dim);
+  cursor:pointer;transition:all .18s;
+}
+.chip-group input:checked + label{background:var(--amber);color:var(--bg);border-color:var(--amber);font-weight:600;}
+.form-note{margin-top:6px;font-size:12px;color:var(--text-dim);}
+.form-status{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);display:none;}
+
+.contact-side{background:var(--bg-panel);padding:52px 46px;display:flex;flex-direction:column;gap:36px;}
+.contact-side h3{font-family:'Big Shoulders Display',sans-serif;font-size:22px;text-transform:uppercase;font-weight:700;}
+.side-block .tc{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:0.1em;}
+.side-block p, .side-block a{color:var(--text-dim);font-size:14.5px;line-height:1.6;margin-top:8px;display:block;}
+.side-block a:hover{color:var(--amber);}
+.side-divider{border-top:1px solid var(--line);}
+.faq-item{padding:16px 0;border-top:1px solid var(--line);}
+.faq-item:last-child{border-bottom:1px solid var(--line);}
+.faq-item summary{
+  cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:"+";color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:16px;}
+.faq-item[open] summary::after{content:"−";}
+.faq-item p{margin-top:10px;color:var(--text-dim);font-size:13.5px;line-height:1.55;}
+
+
+/* ---------- chatbot widget ---------- */
+.chatbot-launcher{
+  position:fixed;right:24px;bottom:24px;z-index:200;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--amber);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+  transition:transform .18s ease;
+}
+.chatbot-launcher:hover{transform:translateY(-2px) scale(1.04);}
+.chatbot-launcher .dot-ping{
+  position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;
+  background:var(--red);border:2px solid var(--bg);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+.chatbot-launcher svg{width:26px;height:26px;fill:none;stroke:#0e1012;stroke-width:2;}
+.chatbot-panel{
+  position:fixed;right:24px;bottom:94px;z-index:200;
+  width:min(360px, calc(100vw - 48px));height:min(520px, calc(100vh - 160px));
+  background:var(--bg-panel);border:1px solid var(--line);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+  opacity:0;transform:translateY(12px) scale(0.98);pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+}
+.chatbot-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+.chatbot-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:16px 18px;border-bottom:1px solid var(--line);background:var(--bg-panel-2);
+}
+.chatbot-head .who{display:flex;align-items:center;gap:10px;}
+.chatbot-head .who .dot{width:8px;height:8px;border-radius:50%;background:#3ddc7a;box-shadow:0 0 6px #3ddc7a;}
+.chatbot-head strong{font-family:'Big Shoulders Display',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:0.02em;}
+.chatbot-head span.sub{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-dim);letter-spacing:0.05em;}
+.chatbot-close{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:20px;line-height:1;padding:4px;}
+.chatbot-close:hover{color:var(--amber);}
+.chatbot-body{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+.chatbot-msg{max-width:85%;font-size:13.5px;line-height:1.5;padding:10px 13px;border-radius:var(--radius);}
+.chatbot-msg.bot{background:var(--bg-panel-2);border:1px solid var(--line);align-self:flex-start;}
+.chatbot-msg.user{background:var(--amber);color:var(--bg);align-self:flex-end;font-weight:500;}
+.chatbot-msg.typing{display:flex;gap:5px;padding:14px 16px;}
+.chatbot-msg.typing span{width:6px;height:6px;border-radius:50%;background:var(--text-dim);animation:typing-bounce 1s infinite ease-in-out;}
+.chatbot-msg.typing span:nth-child(2){animation-delay:.15s;}
+.chatbot-msg.typing span:nth-child(3){animation-delay:.3s;}
+@keyframes typing-bounce{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-4px);opacity:1;}}
+.chatbot-msg .cta-inline{display:block;margin-top:8px;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:12px;}
+.chatbot-msg .cta-inline:hover{color:var(--amber);}
+.chatbot-suggest{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 14px;}
+.chatbot-suggest button{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-dim);
+  background:transparent;border:1px solid var(--line);padding:7px 11px;cursor:pointer;
+  transition:all .18s;
+}
+.chatbot-suggest button:hover{border-color:var(--amber);color:var(--amber);}
+.chatbot-form{display:flex;gap:8px;padding:14px 16px;border-top:1px solid var(--line);background:var(--bg-panel-2);}
+.chatbot-form input{
+  flex:1;background:var(--bg);border:1px solid var(--line);color:var(--text);
+  padding:11px 12px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;border-radius:var(--radius);
+}
+.chatbot-form input:focus{outline:none;border-color:var(--cyan);}
+.chatbot-form button{
+  background:var(--amber);color:var(--bg);border:none;padding:0 16px;
+  font-weight:600;cursor:pointer;border-radius:var(--radius);
+}
+@media(max-width:480px){
+  .chatbot-panel{right:12px;left:12px;width:auto;bottom:88px;}
+  .chatbot-launcher{right:16px;bottom:16px;}
+}
+
+
+.skip-link{
+  position:fixed;top:-60px;left:12px;z-index:300;
+  background:var(--amber);color:var(--bg);padding:10px 16px;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+  border-radius:var(--radius);transition:top .15s ease;
+}
+.skip-link:focus{top:12px;}
+
+</style>
+</head>
+<body>
+<div data-hub-nav="1" style="background:#0b0b12;padding:8px 16px;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;font:14px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;position:fixed;top:0;left:0;right:0;height:40px;box-sizing:border-box;z-index:100000;"><a href="/" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">BDF Production (accueil)</a><a href="/flyers/index.html" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">Flyer Éclair</a><a href="/parfums" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">Parfums</a><a href="/bdf-production/index.html" style="color:#fff;text-decoration:none;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.15);">BDF Production</a></div>
+<style>body{padding-top:40px !important;}header{top:40px !important;}</style>
+
+<a class="skip-link mono" href="#main">Aller au contenu</a>
+
+<header>
+  <div class="logo"><span class="dot"></span>BDF PRODUCTION</div>
+  <nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navlinks" id="navLinks">
+      <a href="index.html">Accueil</a>
+      <a href="index.html#services">Prestations</a>
+      <a href="index.html#public">Pour qui</a>
+      <a href="index.html#avis">Avis</a>
+      <a href="tarifs.html">Tarifs</a>
+    </div>
+    <a class="cta" href="devis.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-head" id="main">
+  <div class="rec-bar mono">
+    <span class="rec-dot"></span> ERREUR 404 — BDF PRODUCTION
+  </div>
+  <h1>Page <span class="accent">introuvable</span></h1>
+  <p class="lede">La page que vous cherchez n'existe pas ou a été déplacée. Retournez à l'accueil ou choisissez une destination ci-dessous.</p>
+</div>
+
+<div class="sprocket">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<section style="padding-top:20px;padding-bottom:120px;">
+  <div class="hero-ctas" style="margin-top:0;">
+    <a class="btn btn-primary" href="index.html">Retour à l'accueil</a>
+    <a class="btn btn-ghost" href="tarifs.html">Voir les tarifs</a>
+    <a class="btn btn-ghost" href="devis.html">Contact</a>
+  </div>
+</section>
+
+<footer>
+
+  <span>© <span id="year"></span> BDF PRODUCTION — TOUS DROITS RÉSERVÉS</span>
+  <nav class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="devis.html">Contact</a>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Confidentialité</a>
+  </nav>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  (function(){
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if(!toggle || !links) return;
+    function closeMenu(){
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+    function openMenu(){
+      links.classList.add('open');
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    }
+    toggle.addEventListener('click', function(){
+      links.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeMenu();
+    });
+  })();
+
+</script>
+
+
+<button class="chatbot-launcher" id="chatbotLauncher" aria-label="Ouvrir l'assistant BDF Production" aria-expanded="false">
+  <span class="dot-ping" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24"><path d="M4 4h16v12H8l-4 4V4z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+</button>
+
+<div class="chatbot-panel" id="chatbotPanel" role="dialog" aria-label="Assistant BDF Production" aria-hidden="true">
+  <div class="chatbot-head">
+    <div class="who">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        <strong>Assistant BDF</strong>
+        <span class="sub mono">RÉPONSE AUTOMATIQUE INSTANTANÉE</span>
+      </div>
+    </div>
+    <button class="chatbot-close" id="chatbotClose" aria-label="Fermer l'assistant">×</button>
+  </div>
+  <div class="chatbot-body" id="chatbotBody" role="log" aria-live="polite" aria-label="Messages de l'assistant"></div>
+  <div class="chatbot-suggest" id="chatbotSuggest"></div>
+  <form class="chatbot-form" id="chatbotForm">
+    <input type="text" id="chatbotInput" placeholder="Posez votre question…" autocomplete="off">
+    <button type="submit">Envoyer</button>
+  </form>
+</div>
+
+<script>
+
+  (function(){
+    const launcher = document.getElementById('chatbotLauncher');
+    const panel = document.getElementById('chatbotPanel');
+    const closeBtn = document.getElementById('chatbotClose');
+    const body = document.getElementById('chatbotBody');
+    const form = document.getElementById('chatbotForm');
+    const input = document.getElementById('chatbotInput');
+    const suggestWrap = document.getElementById('chatbotSuggest');
+
+    function normalize(s){
+      return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+    }
+
+    const faq = [
+      { keys: ['tarif','prix','cout','combien'], answer: "Les prestations photo démarrent à 250€/séance et vidéo à 400€/projet. L'accompagnement, la direction artistique et les projets combinés sont établis sur devis. Détail complet sur la page tarifs.", link: { href: 'tarifs.html', label: 'Voir tous les tarifs →' } },
+      { keys: ['location','louer','materiel','gimbal','micro','lumiere'], answer: "Le matériel (éclairage LED, micro HF, micro cravate, DJI Osmo Pocket 4, DJI Osmo Mobile 8, fond vert) se loue à la journée ou à la semaine, avec dégressif dès 3 jours. Une caution est demandée à la remise.", link: { href: 'tarifs.html#location', label: 'Voir les tarifs de location →' } },
+      { keys: ['caution','depot de garantie','garantie du materiel'], answer: "La caution demandée correspond au prix d'achat neuf de l'appareil loué (ex. 620€ pour l'Osmo Pocket 4, 150€ pour l'Osmo Mobile 8). Elle est restituée intégralement au retour en bon état.", link: { href: 'tarifs.html#location', label: 'Voir le détail par appareil →' } },
+      { keys: ['degressif','plusieurs jours','semaine de location'], answer: "La location est dégressive dès 3 jours consécutifs, avec des tarifs à la journée ou à la semaine selon le matériel choisi." },
+      { keys: ['osmo pocket','pocket 4'], answer: "Le DJI Osmo Pocket 4 est une caméra de poche stabilisée (capteur 1 pouce, 4K jusqu'à 60p, stabilisation 3 axes). Location à 50€/jour, carte incluse, caution 620€." },
+      { keys: ['osmo mobile','stabilisateur smartphone','stabilisateur pour telephone'], answer: "Le DJI Osmo Mobile 8 est un stabilisateur 3 axes pour smartphone (jusqu'à 10h d'autonomie). Location à 50€/jour, caution 150€." },
+      { keys: ['cravate','difference micro','quel micro'], answer: "La micro cravate HF est un micro seul sans fil, pratique pour une personne face caméra. Le kit son (micro HF + perche + enregistreur) convient pour un tournage avec équipe son. Les deux sont sur la page tarifs.", link: { href: 'tarifs.html#location', label: 'Comparer les deux →' } },
+      { keys: ['devis','proposition'], answer: "Un devis est établi après un échange sur votre projet, en général sous 24 à 48h. Je peux transmettre votre demande directement ici, ou vous pouvez utiliser le formulaire complet.", link: { href: 'devis.html', label: 'Ouvrir le formulaire complet →' } },
+      { keys: ['delai','temps','rapide'], answer: "Nous répondons sous 24 à 48h, jours ouvrés, que ce soit pour une question, un devis ou une demande de location." },
+      { keys: ['contact','joindre','telephone','mail','email','ecrire'], answer: "Le plus simple est notre formulaire, ou par email à contact@bdfproduction.fr — réponse sous 24 à 48h.", link: { href: 'devis.html', label: 'Aller au formulaire →' } },
+      { keys: ['photo','portrait','packshot','shooting'], answer: "Les prestations photo (portraits, packshots, reportage événementiel, contenu de marque) démarrent à 250€/séance, retouche et export inclus." },
+      { keys: ['video','clip','tournage','montage'], answer: "Les prestations vidéo (clips, formats courts, interviews, films de marque) démarrent à 400€/projet, tournage et montage inclus." },
+      { keys: ['accompagnement','strategie','createur','debutant'], answer: "L'accompagnement à la création de contenus aide à trouver son format, tenir un rythme de publication et structurer une ligne éditoriale. Établi sur devis, selon le suivi souhaité." },
+      { keys: ['direction artistique','da ','identite','image de marque'], answer: "La direction artistique couvre l'univers visuel et la cohérence de marque à l'écran, avant même de sortir la caméra. Sur devis, selon l'ampleur du projet." },
+      { keys: ['zone','deplacement','distance','ou intervenez'], answer: "Nous intervenons sur place comme à distance, selon la nature du projet." },
+      { keys: ['donnees','rgpd','vie privee','confidentialite'], answer: "Vos données ne servent qu'à répondre à votre demande et sont conservées 3 ans maximum. Détails dans notre politique de confidentialité.", link: { href: 'confidentialite.html', label: 'Voir la politique →' } },
+      { keys: ['siret','entreprise','qui etes vous','mentions legales'], answer: "Les informations légales de BDF Production (SIRET, éditeur, hébergeur) sont sur la page mentions légales.", link: { href: 'mentions-legales.html', label: 'Voir les mentions légales →' } },
+      { keys: ['avis','temoignage'], answer: "Des exemples d'avis sont visibles sur la page d'accueil." , link: { href: 'index.html#avis', label: 'Voir les avis →' } },
+      { keys: ['bonjour','salut','hello','coucou'], answer: "Bonjour 👋 Je suis l'assistant automatique de BDF Production. Posez-moi une question sur les tarifs, la location de matériel, les délais ou les devis — je réponds instantanément, et je peux même transmettre votre demande de devis directement ici." },
+      { keys: ['merci'], answer: "Avec grand plaisir ! C'est toujours un plaisir d'aider. N'hésitez pas si vous avez d'autres questions." },
+      { keys: ['au revoir','bonsoir','bonne soiree','a bientot','a plus','bye'], answer: "Merci à vous et bonne journée ! N'hésitez pas à repasser si vous avez d'autres questions, je suis disponible en continu." }
+    ];
+
+    const fallback = { answer: "Je n'ai pas de réponse toute prête pour ça, mais je peux transmettre votre demande directement à l'équipe qui vous répond sous 24 à 48h.", link: { href: 'devis.html', label: 'Ouvrir le formulaire complet →' } };
+
+    function findAnswer(text){
+      const t = normalize(text);
+      let best = null, bestScore = 0;
+      for(const entry of faq){
+        let score = 0;
+        for(const k of entry.keys){
+          if(t.includes(normalize(k))) score += k.length * (k.includes(' ') ? 2 : 1);
+        }
+        if(score > bestScore){ bestScore = score; best = entry; }
+      }
+      return best || fallback;
+    }
+
+    function addMessage(text, who, link){
+      const el = document.createElement('div');
+      el.className = 'chatbot-msg ' + who;
+      el.textContent = text;
+      if(link){
+        const a = document.createElement('a');
+        a.href = link.href; a.textContent = link.label; a.className = 'cta-inline';
+        el.appendChild(a);
+      }
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+      return el;
+    }
+
+    function showTyping(){
+      const el = document.createElement('div');
+      el.className = 'chatbot-msg bot typing';
+      el.setAttribute('aria-hidden','true');
+      el.innerHTML = '<span></span><span></span><span></span>';
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+      return el;
+    }
+
+    // --- État de la demande de devis autonome (capturée dans le chat) ---
+    const lead = { step: null, prenom: '', email: '', projet: '' };
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function startLeadFlow(){
+      lead.step = 'prenom';
+      addMessage("Avec plaisir, je m'en occupe tout de suite. Quel est votre prénom, s'il vous plaît ?", 'bot');
+    }
+
+    async function submitLead(){
+      addMessage("Envoi en cours…", 'bot');
+      try{
+        const data = new FormData();
+        data.append('_subject', "Nouvelle demande via l'assistant du site — BDF Production");
+        data.append('_template', 'table');
+        data.append('_captcha', 'false');
+        data.append('Source', 'Assistant chatbot');
+        data.append('Prénom', lead.prenom);
+        data.append('Email', lead.email);
+        data.append('Projet', lead.projet);
+        const res = await fetch('https://formsubmit.co/ajax/contact@bdfproduction.fr', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+        if(!res.ok) throw new Error('send failed');
+        addMessage(`Merci beaucoup ${lead.prenom}, c'est noté avec plaisir ! Votre demande a bien été transmise à l'équipe — réponse sous 24 à 48h à ${lead.email}.`, 'bot');
+      }catch(err){
+        addMessage("L'envoi automatique a échoué — écrivez-nous directement à contact@bdfproduction.fr, ou réessayez via le formulaire complet.", 'bot', { href: 'devis.html', label: 'Ouvrir le formulaire complet →' });
+      }
+      lead.step = null; lead.prenom = ''; lead.email = ''; lead.projet = '';
+    }
+
+    function handleLeadStep(text){
+      addMessage(text, 'user');
+      if(lead.step === 'prenom'){
+        lead.prenom = text.trim();
+        lead.step = 'email';
+        window.setTimeout(function(){ addMessage(`Merci ${lead.prenom} ! Quel est votre email, s'il vous plaît, pour qu'on puisse vous recontacter ?`, 'bot'); }, 350);
+        return;
+      }
+      if(lead.step === 'email'){
+        const val = text.trim();
+        if(!emailRe.test(val)){
+          window.setTimeout(function(){ addMessage("Cet email ne semble pas valide — vous pouvez le retaper ?", 'bot'); }, 350);
+          return;
+        }
+        lead.email = val;
+        lead.step = 'projet';
+        window.setTimeout(function(){ addMessage("Pourriez-vous décrire votre projet ou besoin en une phrase, s'il vous plaît ?", 'bot'); }, 350);
+        return;
+      }
+      if(lead.step === 'projet'){
+        lead.projet = text.trim();
+        const typing = showTyping();
+        window.setTimeout(function(){
+          typing.remove();
+          submitLead();
+        }, 500);
+        return;
+      }
+    }
+
+    function respond(text){
+      if(lead.step){
+        handleLeadStep(text);
+        return;
+      }
+      addMessage(text, 'user');
+      const typing = showTyping();
+      window.setTimeout(function(){
+        typing.remove();
+        const match = findAnswer(text);
+        addMessage(match.answer, 'bot', match.link);
+      }, 450);
+    }
+
+    const suggestions = ['Vos tarifs ?', 'Louer du matériel', 'Délai de réponse ?', 'Envoyer ma demande ici'];
+    suggestions.forEach(function(s){
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = s;
+      btn.addEventListener('click', function(){
+        if(s === 'Envoyer ma demande ici'){
+          addMessage(s, 'user');
+          window.setTimeout(startLeadFlow, 350);
+        } else {
+          respond(s);
+        }
+      });
+      suggestWrap.appendChild(btn);
+    });
+
+    let started = false;
+    function openPanel(){
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      launcher.setAttribute('aria-expanded','true');
+      if(!started){
+        started = true;
+        addMessage("Bonjour 👋 Je suis l'assistant automatique de BDF Production, disponible en continu. Posez une question, choisissez une suggestion, ou demandez-moi de transmettre votre demande directement.", 'bot');
+      }
+      input.focus();
+    }
+    function closePanel(){
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+      launcher.setAttribute('aria-expanded','false');
+    }
+    launcher.addEventListener('click', function(){
+      panel.classList.contains('open') ? closePanel() : openPanel();
+    });
+    closeBtn.addEventListener('click', closePanel);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const val = input.value.trim();
+      if(!val) return;
+      respond(val);
+      input.value = '';
+    });
+  })();
+
+</script>
+
+
+<style>
+  .cw-widget{position:fixed;bottom:26px;right:26px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+  .cw-bubble{width:58px;height:58px;border-radius:18px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(124,58,237,0.4);transition:transform 250ms ease;font-size:26px;}
+  .cw-bubble:hover{transform:scale(1.08);}
+  .cw-panel{display:none;flex-direction:column;width:360px;max-width:calc(100vw - 48px);height:480px;max-height:70vh;background:#14141c;border:1px solid rgba(255,255,255,0.14);border-radius:24px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,0.5);color:#f4f4f6;}
+  .cw-panel.open{display:flex;}
+  .cw-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);}
+  .cw-header-info{display:flex;align-items:center;gap:12px;}
+  .cw-avatar{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0;}
+  .cw-title{font-weight:700;font-size:13.5px;}
+  .cw-status{font-size:11.5px;color:rgba(244,244,246,0.6);display:flex;align-items:center;gap:6px;margin-top:2px;}
+  .cw-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;}
+  .cw-close{background:none;border:none;color:rgba(244,244,246,0.6);cursor:pointer;padding:4px;font-size:16px;line-height:1;}
+  .cw-close:hover{color:#f4f4f6;}
+  .cw-messages{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;}
+  .cw-msg{max-width:85%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.5;white-space:pre-wrap;}
+  .cw-msg.bot{background:rgba(255,255,255,0.05);color:#f4f4f6;align-self:flex-start;border-bottom-left-radius:4px;}
+  .cw-msg.user{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+  .cw-msg.typing{display:flex;gap:4px;align-items:center;padding:13px 16px;}
+  .cw-msg.typing span{width:6px;height:6px;border-radius:50%;background:rgba(244,244,246,0.6);animation:cwTyping 1.2s infinite ease-in-out;}
+  .cw-msg.typing span:nth-child(2){animation-delay:0.15s;}
+  .cw-msg.typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes cwTyping{0%,60%,100%{opacity:0.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+  .cw-input-row{display:flex;gap:8px;padding:14px;border-top:1px solid rgba(255,255,255,0.08);}
+  .cw-input-row input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:11px 14px;color:#f4f4f6;font-family:inherit;font-size:13.5px;outline:none;transition:border-color 250ms ease;}
+  .cw-input-row input:focus{border-color:#7c3aed;}
+  .cw-send{width:40px;height:40px;border-radius:12px;border:none;cursor:pointer;flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;display:flex;align-items:center;justify-content:center;transition:transform 200ms ease;font-size:16px;}
+  .cw-send:hover{transform:scale(1.06);}
+  .cw-send:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+  .cw-footnote{font-size:10.5px;color:rgba(244,244,246,0.45);text-align:center;padding:0 14px 14px;}
+  @media (max-width:480px){.cw-widget{bottom:16px;right:16px;}.cw-panel{width:calc(100vw - 32px);}}
+</style>
+<div class="cw-widget" data-chat-widget="1">
+  <div class="cw-panel" id="cwPanel">
+    <div class="cw-header">
+      <div class="cw-header-info">
+        <div class="cw-avatar">🤖</div>
+        <div>
+          <div class="cw-title">Assistant BDF Production</div>
+          <div class="cw-status"><span class="cw-dot"></span>En ligne</div>
+        </div>
+      </div>
+      <button type="button" class="cw-close" id="cwClose" aria-label="Fermer le chat">✕</button>
+    </div>
+    <div class="cw-messages" id="cwMessages"></div>
+    <div class="cw-input-row">
+      <input type="text" id="cwInput" placeholder="Posez votre question…" autocomplete="off" aria-label="Votre message">
+      <button type="button" class="cw-send" id="cwSend" aria-label="Envoyer">↑</button>
+    </div>
+    <div class="cw-footnote">Réponses automatiques — pour une commande, utilisez les formulaires du site.</div>
+  </div>
+  <button type="button" class="cw-bubble" id="cwBubble" aria-label="Ouvrir l'assistant">💬</button>
+</div>
+<script>
+(function(){
+  var bubble = document.getElementById('cwBubble');
+  var panel = document.getElementById('cwPanel');
+  var closeBtn = document.getElementById('cwClose');
+  var messages = document.getElementById('cwMessages');
+  var input = document.getElementById('cwInput');
+  var sendBtn = document.getElementById('cwSend');
+  var history = [];
+  var opened = false;
+
+  function addMessage(role, text){
+    var div = document.createElement('div');
+    div.className = 'cw-msg ' + (role === 'user' ? 'user' : 'bot');
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function showTyping(){
+    var div = document.createElement('div');
+    div.className = 'cw-msg bot typing';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  bubble.addEventListener('click', function(){
+    panel.classList.add('open');
+    if(!opened){
+      opened = true;
+      addMessage('bot', "Bonjour ! Je suis l'assistant de BDF Production. Une question sur la location de matériel, les prestations photo/vidéo, nos flyers ou nos parfums ?");
+    }
+    input.focus();
+  });
+
+  closeBtn.addEventListener('click', function(){
+    panel.classList.remove('open');
+  });
+
+  function sendMessage(){
+    var text = input.value.trim();
+    if(!text) return;
+    input.value = '';
+    sendBtn.disabled = true;
+    addMessage('user', text);
+    history.push({role:'user', content:text});
+    var typingEl = showTyping();
+    fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({messages:history})
+    }).then(function(res){
+      if(!res.ok) throw new Error('API error');
+      return res.json();
+    }).then(function(data){
+      var block = (data.content || []).find(function(c){ return c.type === 'text'; });
+      var reply = block ? block.text : "Désolé, je n'ai pas pu formuler de réponse.";
+      typingEl.remove();
+      addMessage('bot', reply);
+      history.push({role:'assistant', content:reply});
+    }).catch(function(){
+      typingEl.remove();
+      addMessage('bot', "Je ne suis pas joignable pour le moment. Écrivez-nous directement à contact@bdfproduction.fr.");
+    }).finally(function(){
+      sendBtn.disabled = false;
+    });
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); sendMessage(); }
+  });
+})();
+</script>
+
+</body>
+</html>
