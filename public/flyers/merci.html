@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement confirmé — Flyer Éclair</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F19; --bg-2:#141A26; --purple:#7C3AED; --purple-dark:#5B21B6; --cyan:#00D4FF;
+    --success:#10B981; --text:#F8FAFC; --text-2:#94A3B8; --text-3:#7C8798;
+    --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter', sans-serif; line-height:1.6; min-height:100vh; display:flex; flex-direction:column;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 28px; text-align:center;}
+  header{padding:24px 0; border-bottom:1px solid var(--border);}
+  .header-row{max-width:840px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center;}
+  .logo{font-family:'Manrope', sans-serif; font-weight:800; font-size:18px; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:9px;}
+  .logo-icon{width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--purple), var(--purple-dark)); display:inline-block;}
+  .headlink{font-size:12.5px; font-weight:500; color:var(--text-2); text-decoration:none;}
+  .headlink:hover{color:var(--text);}
+  main{flex:1; display:flex; align-items:center; padding:60px 0;}
+  .check{width:64px; height:64px; border-radius:50%; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:var(--success); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; font-size:28px;}
+  .eyebrow{font-size:13px; font-weight:600; color:var(--cyan); margin-bottom:14px;}
+  h1{font-family:'Manrope', sans-serif; font-weight:800; font-size:clamp(26px,4vw,36px); margin-bottom:18px; letter-spacing:-0.02em;}
+  #planRecap{font-family:'Manrope', sans-serif; font-weight:700; color:var(--text); background:var(--bg-2); border:1px solid var(--border); display:inline-block; padding:10px 20px; border-radius:14px; margin-bottom:24px; font-size:15px;}
+  p{color:var(--text-2); font-size:15px; margin-bottom:10px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-family:'Inter', sans-serif; font-size:14.5px; font-weight:600; padding:13px 26px; border-radius:16px; cursor:pointer; border:none; text-decoration:none; background:linear-gradient(135deg, var(--purple), var(--purple-dark)); color:#fff; box-shadow:0 4px 20px rgba(124,58,237,0.35); margin-top:14px; transition:transform 250ms ease, box-shadow 250ms ease;}
+  .btn:hover{transform:translateY(-2px) scale(1.02); box-shadow:0 10px 30px rgba(124,58,237,0.5);}
+  .contact-note{margin-top:44px; font-size:12.5px; color:var(--text-3);}
+  .contact-note a{color:var(--text-3); text-decoration:underline;}
+</style>
+</head>
+<body>
+<div data-hub-nav="1" style="background:#0b0b12;padding:8px 16px;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;font:14px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;position:fixed;top:0;left:0;right:0;height:40px;box-sizing:border-box;z-index:100000;"><a href="/" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">BDF Production (accueil)</a><a href="/flyers/index.html" style="color:#fff;text-decoration:none;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.15);">Flyer Éclair</a><a href="/parfums" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">Parfums</a><a href="/bdf-production/index.html" style="color:rgba(255,255,255,.65);text-decoration:none;font-weight:500;padding:4px 10px;border-radius:999px;">BDF Production</a></div>
+<style>body{padding-top:40px !important;}header{top:40px !important;}</style>
+<header>
+  <div class="header-row">
+    <a href="index.html" class="logo"><span class="logo-icon"></span>Flyer Éclair</a>
+    <a href="index.html" class="headlink">Retour au site</a>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="check">✓</div>
+    <div class="eyebrow">Paiement confirmé</div>
+    <h1>Merci, votre commande est enregistrée !</h1>
+    <div id="planRecap">Chargement du récapitulatif…</div>
+    <p>Dernière étape : envoyez-nous le contenu de votre flyer (texte, logo, visuels, date souhaitée) pour qu'on puisse démarrer la création — livraison sous 24h dès réception de votre brief.</p>
+    <a href="index.html#commander" class="btn">Envoyer les détails de mon flyer →</a>
+    <p class="contact-note">Une question sur votre commande ? Écrivez-nous à <a href="mailto:contact@bdfproduction.fr">contact@bdfproduction.fr</a></p>
+  </div>
+</main>
+<script>
+  var PLAN_NAMES = {
+    simple: 'Flyer Simple — 14,99€',
+    rectoverso: 'Flyer Recto/Verso — 25€',
+    premium: 'Flyer Premium — 29€',
+    social: 'Pack Réseaux Sociaux — 20€'
+  };
+  var params = new URLSearchParams(window.location.search);
+  var plan = params.get('plan');
+  var recap = document.getElementById('planRecap');
+  recap.textContent = (plan && PLAN_NAMES[plan]) ? ('Formule réglée : ' + PLAN_NAMES[plan]) : 'Votre paiement a bien été reçu.';
+</script>
+</body>
+</html>
