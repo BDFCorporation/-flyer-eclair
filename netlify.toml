@@ -1,5 +1,9 @@
 [build]
-  command = "npm run build"
+  # Le projet n'a pas encore d'historique de migrations Prisma (prisma/migrations/) :
+  # `db push` synchronise le schéma directement, idempotent, pratique pour amorcer
+  # une base neuve. À remplacer par `prisma migrate deploy` une fois de vraies
+  # migrations versionnées créées (`npx prisma migrate dev` en local).
+  command = "npx prisma db push --skip-generate && npm run build"
   publish = ".next"
 
 [[plugins]]
