@@ -3,7 +3,11 @@
   # `db push` synchronise le schéma directement, idempotent, pratique pour amorcer
   # une base neuve. À remplacer par `prisma migrate deploy` une fois de vraies
   # migrations versionnées créées (`npx prisma migrate dev` en local).
-  command = "npx prisma db push --skip-generate && npm run build"
+  # Netlify met node_modules en cache entre builds, donc le postinstall qui génère
+  # normalement le client Prisma ne se relance pas : on force `prisma generate`
+  # explicitement (db push le referait implicitement, mais on le rend explicite
+  # et on ne saute plus cette étape avec --skip-generate).
+  command = "npx prisma generate && npx prisma db push && npm run build"
   publish = ".next"
 
 [[plugins]]
