@@ -87,7 +87,7 @@ export default async function ProductPage({
         <p className="mt-6 text-sm text-ink/50">
           {product.stock > 0 ? "En stock" : "Rupture de stock"}
         </p>
-        {product.stock > 0 && <AddToCartButton productId={product.id} />}
+        {product.stock > 0 && <AddToCartButton productId={product.id} stock={product.stock} />}
       </div>
     </main>
   );

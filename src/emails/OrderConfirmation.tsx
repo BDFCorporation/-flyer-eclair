@@ -21,8 +21,8 @@ export function OrderConfirmationEmail({ order }: OrderConfirmationProps) {
             Merci pour votre commande {order.orderNumber}
           </Text>
           <Section>
-            {order.items.map((item) => (
-              <Text key={item.productName}>
+            {order.items.map((item, index) => (
+              <Text key={`${item.productName}-${index}`}>
                 {item.productName} × {item.quantity} — {formatPriceCents(item.totalCents)}
               </Text>
             ))}

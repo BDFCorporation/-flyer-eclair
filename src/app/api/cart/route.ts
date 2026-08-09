@@ -31,6 +31,7 @@ async function serializeCart(sessionId: string) {
     quantity: item.quantity,
     unitPriceCents: item.unitPriceCents,
     totalCents: item.unitPriceCents * item.quantity,
+    stock: item.product.stock,
   }));
   return { items, subtotalCents: cartSubtotalCents(items) };
 }

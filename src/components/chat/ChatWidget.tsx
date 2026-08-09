@@ -35,10 +35,13 @@ export function ChatWidget() {
     setHistory(nextHistory);
     setPending(true);
     try {
+      // L'API ne conserve qu'une fenêtre récente (voir /api/chat) : n'envoyer que les
+      // derniers messages pour ne pas se heurter à la limite au fil d'une longue conversation.
+      const recentHistory = nextHistory.slice(-20);
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextHistory }),
+        body: JSON.stringify({ messages: recentHistory }),
       });
       if (!res.ok) throw new Error("API error");
       const data = await res.json();
@@ -116,6 +119,7 @@ export function ChatWidget() {
                   sendMessage();
                 }
               }}
+              maxLength={2000}
               placeholder="Posez votre question…"
               aria-label="Votre message"
               style={{ flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 12, padding: "11px 14px", color: "#f4f4f6", fontSize: 13.5, outline: "none" }}

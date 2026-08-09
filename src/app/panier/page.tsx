@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import { formatPriceCents } from "@/lib/constants";
@@ -9,10 +9,29 @@ import { Button } from "@/components/ui/Button";
 export default function PanierPage() {
   const { items, subtotalCents, isLoading, fetchCart, setQuantity, removeItem } =
     useCartStore();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchCart();
+    fetchCart().catch((err) => setError(err.message));
   }, [fetchCart]);
+
+  async function handleSetQuantity(productId: string, quantity: number) {
+    setError(null);
+    try {
+      await setQuantity(productId, quantity);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue.");
+    }
+  }
+
+  async function handleRemove(productId: string) {
+    setError(null);
+    try {
+      await removeItem(productId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue.");
+    }
+  }
 
   if (!isLoading && items.length === 0) {
     return (
@@ -32,6 +51,7 @@ export default function PanierPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="font-display text-3xl mb-8">Votre panier</h1>
+      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
       <ul className="divide-y divide-ink/10">
         {items.map((item) => (
           <li key={item.productId} className="flex items-center justify-between gap-4 py-4">
@@ -44,12 +64,17 @@ export default function PanierPage() {
             <div className="flex items-center gap-3">
               <select
                 value={item.quantity}
-                onChange={(event) => setQuantity(item.productId, Number(event.target.value))}
+                onChange={(event) => handleSetQuantity(item.productId, Number(event.target.value))}
                 className="rounded-md border border-ink/15 px-2 py-1.5 text-sm"
                 aria-label={`Quantité pour ${item.name}`}
               >
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <option key={n} value={n}>
+                {/* Le nombre d'options proposées suit le stock (max 5), en gardant toujours
+                    la quantité déjà en panier visible même si elle dépasse le stock disponible. */}
+                {Array.from(
+                  { length: Math.max(Math.min(5, item.stock), item.quantity) },
+                  (_, i) => i + 1
+                ).map((n) => (
+                  <option key={n} value={n} disabled={n > item.stock}>
                     {n}
                   </option>
                 ))}
@@ -58,7 +83,7 @@ export default function PanierPage() {
                 {formatPriceCents(item.totalCents)}
               </span>
               <button
-                onClick={() => removeItem(item.productId)}
+                onClick={() => handleRemove(item.productId)}
                 className="text-sm text-ink/50 hover:text-ink"
                 aria-label={`Retirer ${item.name}`}
               >
